@@ -1,0 +1,144 @@
+---
+// Obtener datos de emergencia desde el backend
+const response = await fetch('http://localhost:3001/emergencias'); // URL a tu API
+let emergencies = [];
+
+if (response.ok) {
+  emergencies = await response.json();
+} else {
+  console.error("Error fetching emergencies:", response.statusText);
+}
+---
+
+<style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  th {
+    background-color: #ff3333;
+    color: #fff;
+  }
+  tr:hover {
+    background-color: #f5f5f5;
+  }
+</style>
+
+<table>
+  <thead>
+    <tr>
+      <th>Numero de parte</th>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Documento</th>
+      <th>Dirección</th>
+      <th>Tipo de Asistencia</th>
+      <th>Jefe de Dotación</th>
+      <th>Parte Escrito</th>
+    </tr>
+  </thead>
+  <tbody>
+    {emergencies.length > 0 ? (
+      emergencies.map((emergencia) => (
+        <tr key={emergencia.parte_id}>
+          <td>{emergencia.parte_id}</td>
+          <td>{emergencia.nombre_denunciante}</td>
+          <td>{emergencia.apellido_denunciante}</td>
+          <td>{emergencia.documento_denunciante}</td>
+          <td>{emergencia.direccion}</td>
+          <td>{emergencia.tipo_asistencia}</td>
+          <td>{emergencia.jefe_dotacion}</td>
+          <td>{emergencia.parte_escrito}</td>
+        </tr>
+      ))
+    ) : (
+      <tr>
+        <td colspan="8">No hay datos de emergencia disponibles</td> {/* Asegúrate que el colspan sea igual al número de columnas */}
+      </tr>
+    )}
+  </tbody>
+</table>
+
+<div class="pagination">
+  <button class="load-more">Cargar más</button>
+</div>
+
+<div class="actions-bottom">
+  <button class="add-btn">Agregar nuevo</button>
+  <button class="edit-btn">Modificar</button>
+  <button class="delete-btn">Borrar</button>
+</div>
+</section>
+
+<style>
+.emergency-section {
+  padding: 1rem;
+}
+
+.actions, .actions-bottom {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.emergency-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.emergency-table th, .emergency-table td {
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.add-btn, .edit-btn, .delete-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-btn {
+  background-color: #ff4d4d;
+}
+</style>
+
+<script>
+// Aquí puedes agregar lógica para cargar más datos, exportar a CSV o PDF, etc.
+const loadMoreButton = document.querySelector('.load-more');
+loadMoreButton.addEventListener('click', () => {
+  // Lógica para cargar más registros en la tabla
+});
+
+const addButton = document.querySelector('.add-btn');
+const editButton = document.querySelector('.edit-btn');
+const deleteButton = document.querySelector('.delete-btn');
+
+// Lógica para agregar, editar y borrar registros
+addButton.addEventListener('click', () => {
+  // Mostrar modal para agregar nuevo registro
+});
+
+editButton.addEventListener('click', () => {
+  // Mostrar modal para modificar el registro seleccionado
+});
+
+deleteButton.addEventListener('click', () => {
+  // Confirmación para borrar el registro seleccionado
+});
+</script>

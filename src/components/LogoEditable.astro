@@ -1,0 +1,18 @@
+---
+const [logoUrl, setLogoUrl] = Astro.useState('../components/logo.png');
+
+const handleLogoChange = (event) => {
+  const file = event.target.files[0];
+  const newLogoUrl = URL.createObjectURL(file);
+  setLogoUrl(newLogoUrl);
+};
+---
+
+<div class="logo-container">
+  <img src={logoUrl} alt="Editable Logo" class="logo" />
+  <input type="file" onChange={handleLogoChange} />
+</div>
+
+<style>
+  .logo { width: 100px; height: auto; }
+</style>

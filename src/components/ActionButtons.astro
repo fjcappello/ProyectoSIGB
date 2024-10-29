@@ -1,0 +1,26 @@
+---
+const handleAdd = () => {
+  // Lógica para mostrar modal de agregar
+};
+
+const handleModify = () => {
+  // Lógica para mostrar modal de modificar
+};
+
+const handleDelete = () => {
+  if (confirm('¿Estás seguro que deseas borrar este registro?')) {
+    // Lógica para borrar
+  }
+};
+---
+
+<div class="action-buttons">
+  <button onClick={handleAdd}>Agregar nuevo</button>
+  <button onClick={handleModify}>Modificar</button>
+  <button onClick={handleDelete} class="danger">Borrar</button>
+</div>
+
+<style>
+  .action-buttons { display: flex; gap: 10px; }
+  .danger { background-color: red; color: white; }
+</style>
