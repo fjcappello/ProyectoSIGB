@@ -1,14 +1,14 @@
-// Importar módulos necesarios
+
 const express = require('express');
 const mysql = require('mysql2');
 const cors = require('cors');
 
-// Instancia de Express
+
 const app = express();
 app.use(cors());
 
-// Middleware para procesar JSON
-app.use(express.json());  // ¡Agregado para procesar JSON!
+
+app.use(express.json());  
 
 // Configuración de la conexión a MySQL 
 const db = mysql.createConnection({
