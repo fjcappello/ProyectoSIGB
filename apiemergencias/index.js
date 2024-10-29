@@ -3,20 +3,20 @@ const express = require('express');
 const mysql = require('mysql2');
 const cors = require('cors');
 
-// Crear una aplicación Express
+// Instancia de Express
 const app = express();
 app.use(cors());
 
-// Configuración de la conexión a MySQL en XAMPP
+// Configuración de la conexión a MySQL 
 const db = mysql.createConnection({
   host: 'localhost',
-  user: 'root',           // Usuario predeterminado de XAMPP
-  password: '',           // Contraseña en blanco (ajusta si la cambiaste)
-  database: 'bomberos', // Nombre de tu base de datos
-  port: 3306              // Puerto de MySQL en XAMPP
+  user: 'root',           
+  password: '',           
+  database: 'bomberos', 
+  port: 3306              
 });
 
-// Conectar a la base de datos
+// Conexion a la base de datos
 db.connect((err) => {
   if (err) {
     console.error('Error de conexión a MySQL:', err);
@@ -26,7 +26,7 @@ db.connect((err) => {
 });
 
 // Endpoint para obtener datos de emergencias
-app.get('/emergencias', (req, res) => {
+app.get('/partesemergencias', (req, res) => {
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
   const query = `
     SELECT 
@@ -52,7 +52,7 @@ app.get('/emergencias', (req, res) => {
   });
 });
 
-// Iniciar el servidor
+// Inicio del servidor
 const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`Servidor API ejecutándose en http://localhost:${PORT}`);

@@ -1,6 +1,6 @@
 ---
-// Obtener datos de emergencia desde el backend
-const response = await fetch('http://localhost:3001/emergencias'); // URL a tu API
+// Obtencion de los partes desde el backend
+const response = await fetch('http://localhost:3001/partesemergencias'); 
 let emergencies = [];
 
 if (response.ok) {
@@ -58,7 +58,7 @@ if (response.ok) {
       ))
     ) : (
       <tr>
-        <td colspan="8">No hay datos de emergencia disponibles</td> {/* Asegúrate que el colspan sea igual al número de columnas */}
+        <td colspan="8">No hay datos de emergencia disponibles</td> {}
       </tr>
     )}
   </tbody>
@@ -119,10 +119,9 @@ if (response.ok) {
 </style>
 
 <script>
-// Aquí puedes agregar lógica para cargar más datos, exportar a CSV o PDF, etc.
 const loadMoreButton = document.querySelector('.load-more');
 loadMoreButton.addEventListener('click', () => {
-  // Lógica para cargar más registros en la tabla
+// Lógica para cargar más registros en la tabla
 });
 
 const addButton = document.querySelector('.add-btn');
@@ -131,11 +130,11 @@ const deleteButton = document.querySelector('.delete-btn');
 
 // Lógica para agregar, editar y borrar registros
 addButton.addEventListener('click', () => {
-  // Mostrar modal para agregar nuevo registro
+//  modal para agregar nuevo registro
 });
 
 editButton.addEventListener('click', () => {
-  // Mostrar modal para modificar el registro seleccionado
+  // modal para modificar el registro seleccionado
 });
 
 deleteButton.addEventListener('click', () => {

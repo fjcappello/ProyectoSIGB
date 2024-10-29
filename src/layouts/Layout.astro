@@ -1,5 +1,4 @@
 ---
-// Establece el título por defecto si no se proporciona
 const title = Astro.props.title || 'Registro de Emergencias';
 ---
 
@@ -12,15 +11,15 @@ const title = Astro.props.title || 'Registro de Emergencias';
   </head>
   <body>
     <header>
-      <slot name="header"></slot> <!-- Aquí podrías poner un logo o menú -->
+      <slot name="header"></slot> 
     </header>
 
     <main>
-      <slot></slot> <!-- Aquí se cargará el contenido de la página -->
+      <slot></slot> 
     </main>
 
     <footer>
-      <slot name="footer"></slot> <!-- Puedes usar este espacio para un pie de página -->
+      <slot name="footer"></slot> 
     </footer>
   </body>
 </html>
@@ -60,7 +59,6 @@ const title = Astro.props.title || 'Registro de Emergencias';
     bottom: 0;
   }
 
-  /* Estilo básico para una página adaptable */
   @media (max-width: 768px) {
     main {
       padding: 10px;
