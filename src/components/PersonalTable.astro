@@ -1,12 +1,12 @@
 ---
 // Obtencion de los partes desde el backend
-const response = await fetch('http://localhost:3001/partesemergencias'); 
-let emergencies = [];
+const response = await fetch('http://localhost:3001/personal'); 
+let personal = [];
 
 if (response.ok) {
-  emergencies = await response.json();
+  personal = await response.json();
 } else {
-  console.error("Error fetching emergencies:", response.statusText);
+  console.error("Error fetching personal:", response.statusText);
 }
 ---
 
@@ -32,33 +32,29 @@ if (response.ok) {
 <table>
   <thead>
     <tr>
-      <th>Parte N°</th>
-      <th>Nombre</th>
-      <th>Apellido</th>
+      <th>Legajo</th>
+      <th>Nombre y Apellido</th>
       <th>Documento</th>
-      <th>Dirección</th>
-      <th>Tipo de Asistencia</th>
-      <th>Jefe de Dotación</th>
-      <th>Parte Escrito</th>
+      <th>Fecha de nacimiento</th>
+      <th>Fecha de ingreso</th>
+      <th>Jerarquia</th>
     </tr>
   </thead>
   <tbody>
-    {emergencies.length > 0 ? (
-      emergencies.map((emergencia) => (
-        <tr key={emergencia.parte_id}>
-          <td>{emergencia.parte_id}</td>
-          <td>{emergencia.nombre_denunciante}</td>
-          <td>{emergencia.apellido_denunciante}</td>
-          <td>{emergencia.documento_denunciante}</td>
-          <td>{emergencia.direccion}</td>
-          <td>{emergencia.tipo_asistencia}</td>
-          <td>{emergencia.jefe_dotacion}</td>
-          <td>{emergencia.parte_escrito}</td>
+    {personal.length > 0 ? (
+      personal.map((rrhh) => (
+        <tr key={rrhh.legajo}>
+          <td>{rrhh.legajo}</td>
+          <td>{rrhh.nombre_completo}</td>
+          <td>{rrhh.documento}</td>
+          <td>{rrhh.nacimiento}</td>
+          <td>{rrhh.fecha_ingreso}</td>
+          <td>{rrhh.jerarquia}</td>
         </tr>
       ))
     ) : (
       <tr>
-        <td colspan="8">No hay datos de emergencia disponibles</td> {}
+        <td colspan="8">No hay datos de personal disponibles</td> {}
       </tr>
     )}
   </tbody>

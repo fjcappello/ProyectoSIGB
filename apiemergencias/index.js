@@ -52,6 +52,31 @@ app.get('/partesemergencias', (req, res) => {
   });
 });
 
+// Endpoint para obtener datos de personal
+  app.get('/personal', (req, res) => {
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    const query = `
+      SELECT 
+    p.legajo,
+    CONCAT(p.nombre, ' ', p.apellido) AS nombre_completo,
+    p.documento,
+    DATE_FORMAT(p.nacimiento, '%d-%m-%Y') AS nacimiento,
+    j.jerarquia AS jerarquia,  
+    DATE_FORMAT(p.fecha_ingreso, '%d-%m-%Y') AS fecha_ingreso
+  FROM 
+      personal p
+  JOIN  
+    jerarquias j ON p.jerarquia_id = j.id;`;
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error al obtener datos:', err);
+      res.status(500).json({ error: 'Error en el servidor' });
+    } else {
+      res.json(results);
+    }
+  });
+  });
+
 // Inicio del servidor
 const PORT = 3001;
 app.listen(PORT, () => {
