@@ -7,6 +7,9 @@ const cors = require('cors');
 const app = express();
 app.use(cors());
 
+// Middleware para procesar JSON
+app.use(express.json());  // ¡Agregado para procesar JSON!
+
 // Configuración de la conexión a MySQL 
 const db = mysql.createConnection({
   host: 'localhost',
@@ -16,7 +19,7 @@ const db = mysql.createConnection({
   port: 3306              
 });
 
-// Conexion a la base de datos
+// Conexión a la base de datos
 db.connect((err) => {
   if (err) {
     console.error('Error de conexión a MySQL:', err);
@@ -52,21 +55,64 @@ app.get('/partesemergencias', (req, res) => {
   });
 });
 
+// Endpoint para modificar datos de emergencias
+app.put('/partesemergencias/:id', (req, res) => {
+  const id = req.params.id;
+  const { nombre_denunciante, apellido_denunciante, documento_denunciante, direccion, tipo_asistencia, jefe_dotacion, parte_escrito } = req.body;
+  const query = `
+    UPDATE partes
+    SET 
+      nombre_denunciante = ?,
+      apellido_denunciante = ?,
+      documento_denunciante = ?,
+      direccion = ?,
+      tipo_asistencia = ?,
+      jefe_dotacion = ?,
+      parte_escrito = ?
+    WHERE 
+      id = ?`;
+  db.query(query, [nombre_denunciante, apellido_denunciante, documento_denunciante, direccion, tipo_asistencia, jefe_dotacion, parte_escrito, id], (err, results) => {
+    if (err) {
+      console.error('Error al modificar datos:', err);
+      res.status(500).json({ error: 'Error en el servidor' });
+    } else {
+      res.json({ success: 'Datos modificados correctamente' });
+    }
+  });
+});
+
+// Endpoint para agregar datos de emergencias
+app.post('/partesemergencias', (req, res) => {
+  const { nombre_denunciante, apellido_denunciante, documento_denunciante, direccion, tipo_asistencia, jefe_dotacion, parte_escrito } = req.body;
+  const query = `
+    INSERT INTO partes
+    (nombre_denunciante, apellido_denunciante, documento_denunciante, direccion, tipo_asistencia, jefe_dotacion, parte_escrito)
+    VALUES (?, ?, ?, ?, ?, ?, ?)`;
+  db.query(query, [nombre_denunciante, apellido_denunciante, documento_denunciante, direccion, tipo_asistencia, jefe_dotacion, parte_escrito], (err, results) => {
+    if (err) {
+      console.error('Error al agregar datos:', err);
+      res.status(500).json({ error: 'Error en el servidor' });
+    } else {
+      res.json({ success: 'Datos agregados correctamente' });
+    }
+  });
+});
+
 // Endpoint para obtener datos de personal
-  app.get('/personal', (req, res) => {
-    res.setHeader('Content-Type', 'application/json; charset=utf-8');
-    const query = `
-      SELECT 
-    p.legajo,
-    CONCAT(p.nombre, ' ', p.apellido) AS nombre_completo,
-    p.documento,
-    DATE_FORMAT(p.nacimiento, '%d-%m-%Y') AS nacimiento,
-    j.jerarquia AS jerarquia,  
-    DATE_FORMAT(p.fecha_ingreso, '%d-%m-%Y') AS fecha_ingreso
-  FROM 
+app.get('/personal', (req, res) => {
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  const query = `
+    SELECT 
+      p.legajo,
+      CONCAT(p.nombre, ' ', p.apellido) AS nombre_completo,
+      p.documento,
+      DATE_FORMAT(p.nacimiento, '%d-%m-%Y') AS nacimiento,
+      j.jerarquia AS jerarquia,  
+      DATE_FORMAT(p.fecha_ingreso, '%d-%m-%Y') AS fecha_ingreso
+    FROM 
       personal p
-  JOIN  
-    jerarquias j ON p.jerarquia_id = j.id;`;
+    JOIN  
+      jerarquias j ON p.jerarquia_id = j.id;`;
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error al obtener datos:', err);
@@ -75,7 +121,7 @@ app.get('/partesemergencias', (req, res) => {
       res.json(results);
     }
   });
-  });
+});
 
 // Inicio del servidor
 const PORT = 3001;
