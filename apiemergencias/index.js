@@ -123,6 +123,24 @@ app.get('/personal', (req, res) => {
   });
 });
 
+// endpoint para agregar datos de personal
+app.post('/personal', (req, res) => {
+  const { legajo, nombre, apellido, documento, nacimiento, jerarquia_id, fecha_ingreso } = req.body;
+  const query = `
+    INSERT INTO personal
+    (legajo, nombre, apellido, documento, nacimiento, jerarquia_id, fecha_ingreso)
+    VALUES (?, ?, ?, ?, ?, ?, ?)`;
+    db.query(query, [legajo, nombre, apellido, documento, nacimiento, jerarquia_id, fecha_ingreso], (err, results) => {
+      if (err) {
+        console.error('Error al agregar datos:', err);
+        res.status(500).json({ error: 'Error en el servidor' });
+        } else {
+          res.json({ success: 'Datos agregados correctamente' });
+        }
+        });
+});
+
+
 // Inicio del servidor
 const PORT = 3001;
 app.listen(PORT, () => {
